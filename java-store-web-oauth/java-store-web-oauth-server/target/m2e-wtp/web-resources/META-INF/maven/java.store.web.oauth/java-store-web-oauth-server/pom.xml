@@ -1,0 +1,343 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>java.store.web.oauth</groupId>
+    <artifactId>java-store-web-oauth</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+  </parent>
+  <artifactId>java-store-web-oauth-server</artifactId>
+  <packaging>war</packaging>
+  
+  <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <spring.version>4.0.0.RELEASE</spring.version>
+        <aspectj.version>1.6.12</aspectj.version>
+        <mysql.version>5.1.35</mysql.version>
+        <oltu.version>1.0.0</oltu.version>
+        <shiro.version>1.2.3</shiro.version>
+        <fasterxml.jackson.version>2.5.4</fasterxml.jackson.version>
+        <spring.version>4.1.3.RELEASE</spring.version>
+		<hibernate.version>4.3.7.Final</hibernate.version>
+		<spring.data.jpa.version>1.7.2.RELEASE</spring.data.jpa.version>
+		<hibernate-validator.version>5.1.3.Final</hibernate-validator.version>
+		<mysql.jdbc.driver.version>5.1.21</mysql.jdbc.driver.version>
+		<druid.version>1.0.11</druid.version>
+		<axis.version>1.4</axis.version>
+		<slf4j.version>1.7.10</slf4j.version>
+		<logback.version>1.1.2</logback.version>
+		<junit.version>4.11</junit.version>
+		<testng.version>6.8.21</testng.version>
+		<quartz.version>2.2.1</quartz.version>
+		<jedis.version>2.6.1</jedis.version>
+		<ehcache.version>2.6.9</ehcache.version>
+		<xmemcached.version>2.0.0</xmemcached.version>
+		<httpclient.version>4.3.6</httpclient.version>
+		<httpcore.version>4.3.3</httpcore.version>
+		<commons-lang3.version>3.3.2</commons-lang3.version>
+		<commons-collections4.version>4.0</commons-collections4.version>
+		<commons-io.version>2.4</commons-io.version>
+		<guava.version>18.0</guava.version>
+		<joda-time.version>2.7</joda-time.version>
+		<dozer.version>5.5.1</dozer.version>
+		<freemarker.version>2.3.21</freemarker.version>
+		<aspectj.version>1.8.4</aspectj.version>
+		<assertj.version>1.7.0</assertj.version>
+		<mockito.version>1.10.8</mockito.version>
+		<powermock.version>1.6.0</powermock.version>
+		<dubbox.versions>2.8.4</dubbox.versions>
+		<fastjson.version>1.2.5</fastjson.version>
+		<zookeeper.version>3.4.6</zookeeper.version>
+		<struts2.version>2.3.16.3</struts2.version>
+		<tiles.version>2.2.2</tiles.version>
+		<cxf.version>2.4.2</cxf.version>
+		<mybatis.version>3.3.0</mybatis.version>
+		<mybatis-spring.version>1.2.2</mybatis-spring.version>
+		<pagehelper.version>4.0.3</pagehelper.version>
+    </properties>
+
+    <build>
+        <finalName>java-store-web-oauth-server</finalName>
+
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.2</version>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <warSourceExcludes>*/classes/authz.properties</warSourceExcludes>
+                    <packagingExcludes>*/classes/authz.properties</packagingExcludes>
+                    <archive>
+                        <manifestEntries>
+                            <Implementation-BuildNumber>${project.version}</Implementation-BuildNumber>
+                            <Specification-Vendor>monkeyk.com</Specification-Vendor>
+                            <Implementation-Vendor>monkeyk.com</Implementation-Vendor>
+                            <Implementation-Title>${project.name}</Implementation-Title>
+                            <Implementation-Version>${project.version}</Implementation-Version>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+                <excludes>
+                    <!--exclude file list-->
+                    <!--<exclude>project-template.properties</exclude>-->
+                </excludes>
+            </resource>
+        </resources>
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <includes>
+                    <include>**/*</include>
+                </includes>
+            </testResource>
+        </testResources>
+    </build>
+
+    <dependencies>
+
+       <!-- spring data jpa -->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-jpa</artifactId>
+			<version>${spring.data.jpa.version}</version>
+		</dependency>
+		<!-- aop -->
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>${aspectj.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.aspectj</groupId>
+			<artifactId>aspectjweaver</artifactId>
+			<version>${aspectj.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		
+		<!-- assertj -->
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<version>${assertj.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- hibernate4 -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+        <!-- provided dependency -->
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>jsp-api</artifactId>
+            <version>2.1</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <!--public compile dependencies-->
+        <dependency>
+            <groupId>net.sf.ehcache</groupId>
+            <artifactId>ehcache-web</artifactId>
+            <version>2.0.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>opensymphony</groupId>
+            <artifactId>sitemesh</artifactId>
+            <version>2.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjrt</artifactId>
+            <version>${aspectj.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>${aspectj.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-dbcp</groupId>
+            <artifactId>commons-dbcp</artifactId>
+            <version>1.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>0.2.23</version>
+        </dependency>
+        <!--oltu-->
+        <dependency>
+            <groupId>org.apache.oltu.oauth2</groupId>
+            <artifactId>org.apache.oltu.oauth2.authzserver</artifactId>
+            <version>${oltu.version}</version>
+        </dependency>
+
+
+        <!--shiro-->
+        <dependency>
+			<groupId>org.apache.shiro</groupId>
+			<artifactId>shiro-core</artifactId>
+			<version>${shiro.version}</version>
+		</dependency>
+        <dependency>
+	        <groupId>org.apache.shiro</groupId>
+	        <artifactId>shiro-web</artifactId>
+	        <version>${shiro.version}</version>
+        </dependency>
+		<dependency>
+		    <groupId>org.apache.shiro</groupId>
+		    <artifactId>shiro-spring</artifactId>
+		    <version>${shiro.version}</version>
+		</dependency>
+
+        <!--spring-->
+        <dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-expression</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <!--mysql-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
+
+        <!--log4j-->
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.14</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.5</version>
+            <scope>compile</scope>
+        </dependency>
+
+
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>taglibs</groupId>
+            <artifactId>standard</artifactId>
+            <version>1.1.2</version>
+            <scope>compile</scope>
+        </dependency>
+
+
+        <!--json-->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${fasterxml.jackson.version}</version>
+        </dependency>
+
+
+        <!--public test dependencies-->
+      <!--   <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>6.1.1</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>-->
+    </dependencies> 
+  
+</project>
